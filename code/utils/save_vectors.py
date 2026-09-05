@@ -48,15 +48,34 @@ def main():
     parser.add_argument("--save_dir", type=str,
                        default="saved_vectors/llama",
                        help="Directory to save vectors")
+    parser.add_argument("--device", type=str, choices=["auto", "mps", "cuda", "cpu"], default="auto",
+                       help="Device to use (default: auto, preferring MPS on Apple Silicon)")
     
     args = parser.parse_args()
     
+    if args.device == "auto":
+        if torch.backends.mps.is_available():
+            device = torch.device("mps")
+        elif torch.cuda.is_available():
+            device = torch.device("cuda")
+        else:
+            device = torch.device("cpu")
+    else:
+        device = torch.device(args.device)
+        if args.device == "mps" and not torch.backends.mps.is_available():
+            raise RuntimeError("MPS was requested but is not available in this PyTorch environment")
+        if args.device == "cuda" and not torch.cuda.is_available():
+            raise RuntimeError("CUDA was requested but is not available in this PyTorch environment")
+
+    # float16 is supported by MPS and uses substantially less memory than float32.
+    model_dtype = torch.float16 if device.type == "mps" else None
+
     # Load model
     print(f"Loading model: {args.model}")
-    model = AutoModelForCausalLM.from_pretrained(args.model)
+    load_kwargs = {"torch_dtype": model_dtype} if model_dtype is not None else {}
+    model = AutoModelForCausalLM.from_pretrained(args.model, **load_kwargs)
     tokenizer = AutoTokenizer.from_pretrained(args.model)
     
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
     print(f"Model loaded on {device}")
     

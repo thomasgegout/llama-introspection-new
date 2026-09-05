@@ -30,9 +30,9 @@ def format_prompt(model_type, user_message, dataset_name=None):
 
 def get_data(dataset_name): 
     """Load raw data from json files"""
-    # Get the directory where this script is located
-    script_dir = Path(__file__).parent
-    dataset_dir = script_dir / "dataset"
+    # Dataset files live at the repository root, alongside code/.
+    repo_dir = Path(__file__).resolve().parents[2]
+    dataset_dir = repo_dir / "data" / "dataset"
     
     if dataset_name == "simple_data":
         with open(dataset_dir / "simple_data.json", "r") as f:
