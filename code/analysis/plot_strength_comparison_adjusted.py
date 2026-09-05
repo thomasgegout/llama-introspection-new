@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 
 # Load the aggregated data (all concepts)
-data = torch.load('plots/strength_comparison_all_concepts_all_concepts_best.pt', weights_only=False)
+data = torch.load('plots/strength_comparison_all_concepts_best.pt', weights_only=False)
 
 layers = data['layers']
 strength_pairs = data['strength_pairs']

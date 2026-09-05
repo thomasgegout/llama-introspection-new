@@ -53,7 +53,7 @@ COLORS = ['#2E86AB', '#A23B72', '#F18F01', '#C73E1D', '#3B1F2B', '#95C623', '#7B
 def load_model_and_tokenizer():
     """Load model and tokenizer."""
     print("Loading model...")
-    model_name = "meta-llama/Meta-Llama-3.1-8B-Instruct"
+    model_name = "meta-llama/Llama-3.1-8B-Instruct"
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
         torch_dtype=torch.bfloat16,

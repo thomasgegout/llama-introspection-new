@@ -37,7 +37,7 @@ def sweep_all_layers_and_coefficients(model, tokenizer, model_name, datasets, la
                         torch.save(save_data, filepath)
 def main():
     parser = argparse.ArgumentParser(description="Sweep layers and coefficients for concept vector injection")
-    parser.add_argument("--model", type=str, default="meta-llama/Meta-Llama-3.1-8B-Instruct",
+    parser.add_argument("--model", type=str, default="meta-llama/Llama-3.1-8B-Instruct",
                        help="Model name or path")
     parser.add_argument("--datasets", type=str, nargs="+", 
                        default=["simple_data", "complex_data"],

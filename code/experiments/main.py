@@ -44,7 +44,7 @@ def test_vector_multiple_choice(vector_path, model=None, tokenizer=None, max_new
     # Load vector and metadata
     data = torch.load(vector_path, weights_only=False)
     vector = data['vector']
-    model_name = data.get('model_name', 'meta-llama/Meta-Llama-3.1-8B-Instruct')
+    model_name = data.get('model_name', 'meta-llama/Llama-3.1-8B-Instruct')
     
     # Load model if needed (should be pre-loaded in main() for efficiency)
     if model is None or tokenizer is None:
@@ -866,7 +866,7 @@ def main():
 
     # Load model once before the loop (major efficiency improvement)
     # Determine model name from first vector file
-    model_name = "meta-llama/Meta-Llama-3.1-8B-Instruct"
+    model_name = "meta-llama/Llama-3.1-8B-Instruct"
     sample_file = next(Path('saved_vectors/llama/').glob('*.pt'), None)
     if sample_file:
         data = torch.load(sample_file, weights_only=False)
