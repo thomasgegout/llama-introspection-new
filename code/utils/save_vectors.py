@@ -46,7 +46,7 @@ def main():
                        default=list(range(32)),
                        help="Layer indices to sweep (default: 0-31)")
     parser.add_argument("--save_dir", type=str,
-                       default="saved_vectors/llama",
+                       default="saved_vectors/llama_reproduced",
                        help="Directory to save vectors")
     parser.add_argument("--device", type=str, choices=["auto", "mps", "cuda", "cpu"], default="auto",
                        help="Device to use (default: auto, preferring MPS on Apple Silicon)")

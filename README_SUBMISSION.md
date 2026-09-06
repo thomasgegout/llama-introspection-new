@@ -69,7 +69,7 @@ All experiments use **Meta-Llama-3.1-8B-Instruct** (32 layers, hidden dim 4096).
 
 ## Steering Vectors
 
-Pre-computed vectors are in `data/saved_vectors/llama/`:
+Pre-computed vectors are in `data/saved_vectors/llama_reproduced/`:
 - Format: `{concept}_{layer}_{vec_type}.pt`
 - Vector types: `avg` (average across tokens), `last` (final token)
 - 10 concepts × 32 layers × 2 types = 640 vectors

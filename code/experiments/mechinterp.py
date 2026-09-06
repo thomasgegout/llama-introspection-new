@@ -67,7 +67,7 @@ def load_model_and_tokenizer():
 
 def load_vector(concept, layer, vec_type='avg'):
     """Load a concept vector."""
-    vector_path = Path(f'saved_vectors/llama/{concept}_{layer}_{vec_type}.pt')
+    vector_path = Path(f'saved_vectors/llama_reproduced/{concept}_{layer}_{vec_type}.pt')
     if not vector_path.exists():
         raise FileNotFoundError(f"Vector not found: {vector_path}")
     data = torch.load(vector_path, weights_only=False)

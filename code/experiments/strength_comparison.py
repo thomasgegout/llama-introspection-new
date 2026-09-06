@@ -185,7 +185,7 @@ def make_dual_injection_hook(range1, range2, vector, coeff1, coeff2, device):
 
 def load_vector(concept, layer, vec_type='avg'):
     """Load a concept vector for a specific layer."""
-    vector_path = Path(f'saved_vectors/llama/{concept}_{layer}_{vec_type}.pt')
+    vector_path = Path(f'saved_vectors/llama_reproduced/{concept}_{layer}_{vec_type}.pt')
     if not vector_path.exists():
         raise FileNotFoundError(f"Vector not found: {vector_path}")
     data = torch.load(vector_path, weights_only=False)

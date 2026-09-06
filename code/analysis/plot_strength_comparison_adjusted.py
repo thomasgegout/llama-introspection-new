@@ -7,10 +7,26 @@ Averaged over all concepts.
 import torch
 import numpy as np
 import matplotlib.pyplot as plt
+import argparse
 from pathlib import Path
 
+parser = argparse.ArgumentParser(description="Plot adjusted strength-comparison accuracy.")
+parser.add_argument(
+    "--input",
+    type=Path,
+    default=Path("plots/strength_comparison_all_concepts_best.pt"),
+    help="Saved strength-comparison result file",
+)
+parser.add_argument(
+    "--output",
+    type=Path,
+    default=Path("plots/strength_comparison_all_concepts_adjusted_accuracy.png"),
+    help="Output PNG path",
+)
+args = parser.parse_args()
+
 # Load the aggregated data (all concepts)
-data = torch.load('plots/strength_comparison_all_concepts_best.pt', weights_only=False)
+data = torch.load(args.input, weights_only=False)
 
 layers = data['layers']
 strength_pairs = data['strength_pairs']
@@ -59,7 +75,7 @@ ax.axhline(y=0.5, color='red', linestyle='--', linewidth=2, label="Chance (50%)"
 ax.set_xlabel("Injection Layer", fontsize=14)
 ax.set_ylabel("Adjusted Accuracy", fontsize=14)
 ax.set_title("Strength Comparison: Can Model Distinguish Injection Strengths?\n"
-             "(Averaged over all 10 concepts, adjusted for baseline logit difference)",
+             f"(Averaged over {len(concepts)} concepts, adjusted for baseline logit difference)",
              fontsize=14, fontweight='bold')
 ax.set_ylim(0.3, 0.9)
 ax.legend(fontsize=12, loc='best')
@@ -68,7 +84,8 @@ ax.grid(True, alpha=0.3)
 plt.tight_layout()
 
 # Save
-save_path = Path('plots/strength_comparison_all_concepts_adjusted_accuracy.png')
+save_path = args.output
+save_path.parent.mkdir(parents=True, exist_ok=True)
 plt.savefig(save_path, dpi=300, bbox_inches='tight')
 print(f'✓ Saved adjusted accuracy plot to: {save_path}')
 print()

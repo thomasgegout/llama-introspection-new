@@ -24,7 +24,7 @@ def test_vector_multiple_choice(vector_path, model=None, tokenizer=None, max_new
     """
     Test a saved vector with a specific type of inference (to stress-test anthropic's introspection findings)
     Args:
-        vector_path: Path to saved vector file from saved_vectors/llama/
+        vector_path: Path to saved vector file from saved_vectors/llama_reproduced/
         model: Loaded model (will load if None)
         tokenizer: Loaded tokenizer (will load if None)
         max_new_tokens: Max tokens for generation (100 if using original anthropic setup)
@@ -844,7 +844,7 @@ def main():
 
     # Collect vectors by (concept, layer, vec_type)
     vectors_by_concept_layer = defaultdict(lambda: defaultdict(dict))
-    for file in Path('saved_vectors/llama/').glob('*.pt'):
+    for file in Path('saved_vectors/llama_reproduced/').glob('*.pt'):
         filename = file.stem
         parts = filename.split('_')
         if len(parts) < 3:
@@ -867,7 +867,7 @@ def main():
     # Load model once before the loop (major efficiency improvement)
     # Determine model name from first vector file
     model_name = "meta-llama/Llama-3.1-8B-Instruct"
-    sample_file = next(Path('saved_vectors/llama/').glob('*.pt'), None)
+    sample_file = next(Path('saved_vectors/llama_reproduced/').glob('*.pt'), None)
     if sample_file:
         data = torch.load(sample_file, weights_only=False)
         model_name = data.get('model_name', model_name)
